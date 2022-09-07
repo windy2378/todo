@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reg</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
+        import { getDatabase, ref, set, push, onValue, remove, get, child} from "https://www.gstatic.com/firebasejs/9.9.2/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAcEhUk6sw0AfDSl8gfXGzu4VkHrM-kWP8",
+            authDomain: "reservation-5aef7.firebaseapp.com",
+            projectId: "reservation-5aef7",
+            storageBucket: "reservation-5aef7.appspot.com",
+            messagingSenderId: "722097584912",
+            appId: "1:722097584912:web:fca395a652238eb0688395"
+        };
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        onValue(ref(database, '/'), (snapshot)=>{
+
+                let div = document.createElement('div');
+                div.setAttribute('class', 'card card-body mt-3');
+                document.getElementById('list').appendChild(div);
+
+                let div2 = document.createElement('div');
+                div2.setAttribute('id', 'div2'+childSnapshot.key);
+                document.getElementById('div'+childSnapshot.key).appendChild(div2);
+
+                let span = document.createElement('span');
+                let spanText = document.createTextNode(childSnapshot.val().todo);
+                span.appendChild(spanText);
+                document.getElementById('div2'+childSnapshot.key).appendChild(span);
+
+                let btn = document.createElement('button');
+                let btnText = document.createTextNode('삭제');
+                btn.appendChild(btnText);
+                btn.setAttribute('type', 'button');
+                btn.setAttribute('class', 'btn btn-dark float-end');
+                btn.setAttribute('id', childSnapshot.key)
+                document.getElementById('div2'+childSnapshot.key).appendChild(btn);
+
+                btn.addEventListener('click', todo_delete);
+            });
+        </script>
+
+</head>
+<body>
+    <h3 class='mt-3'>제천중 공연 오디션 참가 사전등록 현황</h3>
+    <div class="card card-body" id="list"></div>
+</body>
+</html>
