@@ -28,6 +28,8 @@
             snapshot.forEach((childSnapshot)=>{
                 const phone_number = childSnapshot.key;
                 const person_name = childSnapshot.val().name;
+                const enterTime = childSnapshot.val().enterTime;
+                const regTime = childSnapshot.val().regTime;
 
                 var div = document.createElement('div');
                 div.setAttribute('class', 'card card-body mt-3');
@@ -44,6 +46,29 @@
                 phone.appendChild(phoneText);
                 phone.setAttribute('class', 'text-primary');
                 document.getElementById('div_'+phone_number).appendChild(phone);
+
+                const div4 = document.createElement('div');
+                const div4Text = document.createTextNode('등록 시간 : '+regTime);
+                div4.appendChild(div4Text);
+                div4.setAttribute('class', 'text-danger');
+                document.getElementById('div_'+phone_number).appendChild(div4);
+                
+                let enterTimeText = '';
+                if(enterTime){
+                    enterTimeText = '입장 완료('+enterTime+')';
+                }
+                else{
+                    enterTimeText = '입장 전';
+                }
+                const div3 = document.createElement('div');
+                const div3Text = document.createTextNode(enterTimeText);
+                div3.appendChild(div3Text);
+                div3.setAttribute('class', 'text-success');
+                document.getElementById('div_'+phone_number).appendChild(div3);
+
+                /*const hr = document.createElement('hr');
+                hr.setAttribute('style', 'color: purple');
+                document.getElementById('div_'+phone_number).appendChild(hr);*/
             })
         });
 
